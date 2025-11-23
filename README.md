@@ -53,9 +53,10 @@ Navigate to:
 
 It should look like this:
 
-![Plugin](https://github.com/nyxFault/nyxFault-Binja/blob/main/image.png?raw=true)
+![Plugin](https://github.com/nyxFault/Images/blob/main/image.png?raw=true)
 
 #### 2. Through the Command Palette
 
 Press **Ctrl + P** to open the Command Palette,
 type _nyxFault_, and select the desired plugin from the filtered list.
+
