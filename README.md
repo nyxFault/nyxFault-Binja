@@ -88,3 +88,11 @@ type _nyxFault_, and select the desired plugin from the filtered list.
 ## Symbolic Function Symbols
 
 ![SymbolicFunctionSymbols](https://github.com/nyxFault/Images/blob/main/Symbolic_Function_Symbol.png?raw=true)
+
+## Sections
+
+![Sections](https://github.com/nyxFault/Images/blob/main/sections.png?raw=true)
+
+## Segments
+
+![Segments](https://github.com/nyxFault/Images/blob/main/segments.png?raw=true)
