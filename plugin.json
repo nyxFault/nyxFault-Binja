@@ -1,0 +1,10 @@
+{
+    "plugin_name": "nyxFault Plugins",
+    "version": "1.0",
+    "author": "nyxFault",
+    "description": "Basic plugins developed for Binary Ninja which will help in reverse engineering.",
+    "type": ["helper"],
+    "api": ["python3"],
+    "platforms": ["Windows", "Linux", "Darwin"],
+    "license": "MIT"
+}
