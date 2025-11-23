@@ -1,8 +1,5 @@
 # nyxFault-Binja
 
-[![GitHub stars](https://img.shields.io/github/stars/nyxFault/nyxFault-Binja.svg?style=for-the-badge)](https://github.com/nyxFault/nyxFault-Binja/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/nyxFault/nyxFault-Binja.svg?style=for-the-badge)](https://github.com/nyxFault/nyxFault-Binja/network)
-[![GitHub issues](https://img.shields.io/github/issues/nyxFault/nyxFault-Binja.svg?style=for-the-badge)](https://github.com/nyxFault/nyxFault-Binja/issues)
 [![GitHub license](https://img.shields.io/github/license/nyxFault/nyxFault-Binja.svg?style=for-the-badge)](https://github.com/nyxFault/nyxFault-Binja/blob/main/LICENSE)
 ![Python](https://img.shields.io/badge/Python-3.x-blue.svg?style=for-the-badge)
 [![Last Commit](https://img.shields.io/github/last-commit/nyxFault/nyxFault-Binja.svg?style=for-the-badge)](https://github.com/nyxFault/nyxFault-Binja)
