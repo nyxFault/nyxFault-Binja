@@ -59,3 +59,32 @@ It should look like this:
 
 Press **Ctrl + P** to open the Command Palette,
 type _nyxFault_, and select the desired plugin from the filtered list.
+
+
+## Callees Graph
+
+![Callee](https://github.com/nyxFault/Images/blob/main/callees.png?raw=true)
+
+## Callers Graph
+
+![Caller](https://github.com/nyxFault/Images/blob/main/callers.png?raw=true)
+
+## External Symbols
+
+![ExternalSymbols](https://github.com/nyxFault/Images/blob/main/External_Symbol.png?raw=true)
+
+## Functions Symbols
+
+![FunctionSymbols](https://github.com/nyxFault/Images/blob/main/Functions_Symbol.png?raw=true)
+
+## Import Address Symbols
+
+![ImportAddressSymbols](https://github.com/nyxFault/Images/blob/main/Import_Address_Symbols.png?raw=true)
+
+## Import Function Symbols
+
+![ImportFunctionSymbols](https://github.com/nyxFault/Images/blob/main/Import_Function_Symbols.png?raw=true)
+
+## Symbolic Function Symbols
+
+![SymbolicFunctionSymbols](https://github.com/nyxFault/Images/blob/main/Symbolic_Function_Symbol.png?raw=true)
