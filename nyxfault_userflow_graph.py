@@ -1,14 +1,10 @@
-from binaryninja.flowgraph import FlowGraph, FlowGraphNode, EdgeStyle
-from binaryninja.enums import EdgePenStyle, ThemeColor, BranchType, HighlightStandardColor
 from binaryninja import PluginCommand
 from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, 
-    QSpinBox, QTextEdit, QMessageBox, QApplication, QGroupBox, QScrollArea,
-    QGraphicsView, QGraphicsScene, QGraphicsItem, QGraphicsEllipseItem,
-    QGraphicsTextItem, QGraphicsLineItem, QFrame
+    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QSpinBox, QTextEdit, QMessageBox, QApplication, QGroupBox, QGraphicsView, QGraphicsScene, QGraphicsItem, QGraphicsEllipseItem, QGraphicsTextItem, QGraphicsLineItem, QFrame
 )
-from PySide6.QtCore import Qt, QPointF, QRectF
-from PySide6.QtGui import QFont, QPalette, QColor, QPen, QBrush, QPainter
+from PySide6.QtCore import Qt, QPointF
+from PySide6.QtGui import QFont, QColor, QPen, QBrush, QPainter
+import math
 
 # Global references to keep windows alive
 _flow_graph_builder_window = None
@@ -165,8 +161,7 @@ class FlowGraphViewerWindow(QWidget):
         horizontal_spacing = 150
         vertical_spacing = 120
         
-        # Colors for nodes (matching Binary Ninja theme)
-        # Beautiful light colors for nodes
+        # Colors for nodes 
         node_colors = [
             QColor(173, 216, 230),  # Light Blue
             QColor(144, 238, 144),  # Light Green
@@ -387,7 +382,7 @@ class FlowGraphBuilderWindow(QWidget):
         
         self.setLayout(layout)
         
-        # Set monospace font for edge input and preview
+        # Set font for edge input and preview
         mono_font = QFont("Courier New", 10)
         self.edge_input.setFont(mono_font)
         self.preview_text.setFont(mono_font)
@@ -528,9 +523,6 @@ def launch_user_flow_graph(bv):
     _flow_graph_builder_window.show()
     _flow_graph_builder_window.raise_()
     _flow_graph_builder_window.activateWindow()
-
-# Add missing import for math functions
-import math
 
 PluginCommand.register(
     "nyxFault-Binja\\User Flow Graph Builder",

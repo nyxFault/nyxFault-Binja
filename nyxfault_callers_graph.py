@@ -6,16 +6,14 @@ from binaryninja import (
     MessageBoxIcon,
     log_info
 )
-from binaryninja.flowgraph import FlowGraph, FlowGraphNode, EdgeStyle
-from binaryninja.enums import EdgePenStyle, ThemeColor, BranchType, HighlightStandardColor, MediumLevelILOperation
+
+from binaryninja.enums import  MediumLevelILOperation
 from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, 
-    QTextEdit, QMessageBox, QApplication, QGroupBox, QScrollArea,
-    QGraphicsView, QGraphicsScene, QGraphicsItem, QGraphicsEllipseItem,
+    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QApplication, QGraphicsView, QGraphicsScene, QGraphicsItem, QGraphicsEllipseItem,
     QGraphicsTextItem, QGraphicsLineItem, QFrame
 )
-from PySide6.QtCore import Qt, QPointF, QRectF
-from PySide6.QtGui import QFont, QPalette, QColor, QPen, QBrush, QPainter
+from PySide6.QtCore import Qt, QPointF
+from PySide6.QtGui import QFont, QColor, QPen, QBrush, QPainter
 import math
 
 # Global references to keep windows alive

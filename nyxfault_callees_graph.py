@@ -7,16 +7,13 @@ from binaryninja import (
     enums,
     log_info
 )
-from binaryninja.flowgraph import FlowGraph, FlowGraphNode, EdgeStyle
-from binaryninja.enums import EdgePenStyle, ThemeColor, BranchType, HighlightStandardColor, MediumLevelILOperation
+
+from binaryninja.enums import MediumLevelILOperation
 from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, 
-    QTextEdit, QMessageBox, QApplication, QGroupBox, QScrollArea,
-    QGraphicsView, QGraphicsScene, QGraphicsItem, QGraphicsEllipseItem,
-    QGraphicsTextItem, QGraphicsLineItem, QFrame
+    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QApplication, QGraphicsView, QGraphicsScene, QGraphicsItem, QGraphicsEllipseItem, QGraphicsTextItem, QGraphicsLineItem, QFrame
 )
-from PySide6.QtCore import Qt, QPointF, QRectF
-from PySide6.QtGui import QFont, QPalette, QColor, QPen, QBrush, QPainter
+from PySide6.QtCore import Qt, QPointF
+from PySide6.QtGui import QFont, QColor, QPen, QBrush, QPainter
 import math
 
 # Global references to keep windows alive
@@ -38,12 +35,11 @@ class DraggableNodeItem(QGraphicsEllipseItem):
         self.setFlag(QGraphicsItem.ItemSendsGeometryChanges, True)
         
         # Styling - use brighter colors
-        self.setBrush(QBrush(color.lighter(130)))  # Increased from 150 to 130 for brighter
+        self.setBrush(QBrush(color.lighter(130)))  
         self.setPen(QPen(QColor(0, 0, 0), 2))
         
     def itemChange(self, change, value):
         if change == QGraphicsItem.ItemPositionHasChanged:
-            # Update connected edges when node moves
             scene = self.scene()
             if scene and hasattr(scene, 'update_edges_for_node'):
                 scene.update_edges_for_node(self.node_id, self.pos())
@@ -195,7 +191,7 @@ class CalleesGraphWindow(QWidget):
         # Colors for nodes
         source_color = QColor(135, 206, 250)  # Brighter Light Blue for target
         callee_colors = [
-            QColor(144, 238, 144),  # Light Green (already bright)
+            QColor(144, 238, 144),  # Light Green 
             QColor(255, 192, 203),  # Brighter Light Pink
             QColor(255, 255, 102),  # Brighter Light Yellow
             QColor(221, 160, 221),  # Brighter Light Purple
@@ -263,10 +259,12 @@ class CalleesGraphWindow(QWidget):
             callee_text = QGraphicsTextItem("\n".join(callee_text_lines))
             callee_text.setDefaultTextColor(QColor(0, 0, 0))
             callee_text.setParentItem(callee_node)
+            
             # Make text bold
             bold_font = QFont()
             bold_font.setBold(True)
             callee_text.setFont(bold_font)
+
             text_rect = callee_text.boundingRect()
             callee_text.setPos(-text_rect.width() / 2, -text_rect.height() / 2)
             self.scene.addItem(callee_text)
