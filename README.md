@@ -96,3 +96,16 @@ type _nyxFault_, and select the desired plugin from the filtered list.
 ## Segments
 
 ![Segments](https://github.com/nyxFault/Images/blob/main/segments.png?raw=true)
+
+## IOCTL Decoder
+
+A Windows Device I/O Control (IOCTL) code decoder plugin for Binary Ninja. This tool helps reverse engineers quickly decode and understand Windows IOCTL codes found during driver analysis.
+
+**Navigate to Plugins → nyxFault-Binja → Windows IOCTL Decoder**
+
+![IOCTLDecoder](https://github.com/nyxFault/Images/blob/main/IOCTL.png?raw=true)
+
+**Credits**
+
+- Based on work by Satoshi Tanda [WinIoCtlDecoder](https://github.com/tandasat/WinIoCtlDecoder)
+- Device type mapping from [OSR Online](https://www.osronline.com/article.cfm^article=229.htm)
