@@ -11,6 +11,9 @@ from .nyxfault_ImportedFunctionSymbol import *
 from .nyxfault_LibraryFunctionSymbol import *
 from .nyxfault_LocalLabelSymbol import *
 from .nyxfault_SymbolicFunctionSymbol import *
+from .nyxfault_sections import *
+from .nyxfault_segments import *
+from .nyxfault_IOCTL_Decoder import *
 
 # Module Loaded
 print("[nyxfault_plugins] Plugin loaded.")
