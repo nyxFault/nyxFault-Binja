@@ -11,9 +11,9 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont
 
 # Global reference to keep the window alive
-_external_symbols_window = None
+_symbolic_function_symbols_window = None
 
-class ExternalSymbolsWindow(QWidget):
+class SymbolicFunctionSymbolsWindow(QWidget):
     def __init__(self, bv, parent=None):
         super().__init__(parent)
         self.bv = bv
@@ -22,7 +22,7 @@ class ExternalSymbolsWindow(QWidget):
         self.load_symbols()
         
     def init_ui(self):
-        self.setWindowTitle("External Symbols")
+        self.setWindowTitle("Symbolic Function Symbols")
         self.setFixedSize(800, 600)
         
         layout = QVBoxLayout()
@@ -32,7 +32,7 @@ class ExternalSymbolsWindow(QWidget):
         search_layout.addWidget(QLabel("Search:"))
         
         self.search_input = QLineEdit()
-        self.search_input.setPlaceholderText("Search external symbols...")
+        self.search_input.setPlaceholderText("Search symbolic functions...")
         self.search_input.textChanged.connect(self.filter_symbols)
         search_layout.addWidget(self.search_input)
         
@@ -49,17 +49,13 @@ class ExternalSymbolsWindow(QWidget):
         # Table
         self.table = QTableWidget()
         self.table.setColumnCount(2)
-        self.table.setHorizontalHeaderLabels(["Symbol Name", "Address"])
+        self.table.setHorizontalHeaderLabels(["Function Name", "Address"])
         
         # Set table properties
         self.table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
         self.table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
         self.table.setSortingEnabled(True)
         self.table.doubleClicked.connect(self.on_double_click)
-        
-        # Set monospace font for address column
-        monospace_font = QFont("Courier New")
-        self.table.setFont(monospace_font)
         
         layout.addWidget(self.table)
         self.setLayout(layout)
@@ -73,13 +69,13 @@ class ExternalSymbolsWindow(QWidget):
         self.move(x, y)
         
     def load_symbols(self):
-        """Load all ExternalSymbols from the binary"""
+        """Load all SymbolicFunctionSymbols from the binary"""
         self.all_symbols = []
         
-        # Get all ExternalSymbols
-        external_symbols = self.bv.get_symbols_of_type(SymbolType.ExternalSymbol)
+        # Get all SymbolicFunctionSymbols
+        symbolic_function_symbols = self.bv.get_symbols_of_type(SymbolType.SymbolicFunctionSymbol)
         
-        for sym in external_symbols:
+        for sym in symbolic_function_symbols:
             self.all_symbols.append({
                 'name': sym.full_name or "Unknown",
                 'address': sym.address,
@@ -108,7 +104,7 @@ class ExternalSymbolsWindow(QWidget):
         self.table.setRowCount(len(symbols))
         
         for row, symbol in enumerate(symbols):
-            # Symbol Name
+            # Function Name
             name_item = QTableWidgetItem(symbol['name'])
             name_item.setData(Qt.UserRole, symbol['symbol'])
             self.table.setItem(row, 0, name_item)
@@ -121,7 +117,7 @@ class ExternalSymbolsWindow(QWidget):
         self.count_label.setText(f"Total: {len(symbols)}")
         
     def on_double_click(self, index):
-        """Handle double-click to navigate to address"""
+        """Handle double-click to navigate to function"""
         row = index.row()
         symbol_item = self.table.item(row, 0)
         
@@ -133,25 +129,25 @@ class ExternalSymbolsWindow(QWidget):
     
     def closeEvent(self, event):
         """Handle window close - clear global reference"""
-        global _external_symbols_window
-        _external_symbols_window = None
+        global _symbolic_function_symbols_window
+        _symbolic_function_symbols_window = None
         event.accept()
 
-def show_external_symbols(bv):
-    global _external_symbols_window
+def show_symbolic_function_symbols(bv):
+    global _symbolic_function_symbols_window
     
-    if _external_symbols_window is not None:
-        _external_symbols_window.raise_()
-        _external_symbols_window.activateWindow()
+    if _symbolic_function_symbols_window is not None:
+        _symbolic_function_symbols_window.raise_()
+        _symbolic_function_symbols_window.activateWindow()
         return
     
-    _external_symbols_window = ExternalSymbolsWindow(bv)
-    _external_symbols_window.show()
-    _external_symbols_window.raise_()
-    _external_symbols_window.activateWindow()
+    _symbolic_function_symbols_window = SymbolicFunctionSymbolsWindow(bv)
+    _symbolic_function_symbols_window.show()
+    _symbolic_function_symbols_window.raise_()
+    _symbolic_function_symbols_window.activateWindow()
 
 PluginCommand.register(
-    "nyxFault-Binja\\Show External Symbols",
-    "Display all ExternalSymbols in a searchable table",
-    show_external_symbols
+    "nyxFault-Binja\\Show Symbolic Function Symbols",
+    "Display all SymbolicFunctionSymbols in a searchable table",
+    show_symbolic_function_symbols
 )

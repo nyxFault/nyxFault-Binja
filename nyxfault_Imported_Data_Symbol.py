@@ -11,9 +11,9 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont
 
 # Global reference to keep the window alive
-_data_symbols_window = None
+_imported_data_symbols_window = None
 
-class DataSymbolsWindow(QWidget):
+class ImportedDataSymbolsWindow(QWidget):
     def __init__(self, bv, parent=None):
         super().__init__(parent)
         self.bv = bv
@@ -22,7 +22,7 @@ class DataSymbolsWindow(QWidget):
         self.load_symbols()
         
     def init_ui(self):
-        self.setWindowTitle("Data Symbols")
+        self.setWindowTitle("Imported Data Symbols")
         self.setFixedSize(800, 600)
         
         layout = QVBoxLayout()
@@ -32,7 +32,7 @@ class DataSymbolsWindow(QWidget):
         search_layout.addWidget(QLabel("Search:"))
         
         self.search_input = QLineEdit()
-        self.search_input.setPlaceholderText("Search data symbols...")
+        self.search_input.setPlaceholderText("Search imported data...")
         self.search_input.textChanged.connect(self.filter_symbols)
         search_layout.addWidget(self.search_input)
         
@@ -57,10 +57,6 @@ class DataSymbolsWindow(QWidget):
         self.table.setSortingEnabled(True)
         self.table.doubleClicked.connect(self.on_double_click)
         
-        # Set monospace font for address column
-        monospace_font = QFont("Courier New")
-        self.table.setFont(monospace_font)
-        
         layout.addWidget(self.table)
         self.setLayout(layout)
         self.center_window()
@@ -73,13 +69,13 @@ class DataSymbolsWindow(QWidget):
         self.move(x, y)
         
     def load_symbols(self):
-        """Load all DataSymbols from the binary"""
+        """Load all ImportedDataSymbols from the binary"""
         self.all_symbols = []
         
-        # Get all DataSymbols
-        data_symbols = self.bv.get_symbols_of_type(SymbolType.DataSymbol)
+        # Get all ImportedDataSymbols
+        imported_data_symbols = self.bv.get_symbols_of_type(SymbolType.ImportedDataSymbol)
         
-        for sym in data_symbols:
+        for sym in imported_data_symbols:
             self.all_symbols.append({
                 'name': sym.full_name or "Unknown",
                 'address': sym.address,
@@ -133,25 +129,25 @@ class DataSymbolsWindow(QWidget):
     
     def closeEvent(self, event):
         """Handle window close - clear global reference"""
-        global _data_symbols_window
-        _data_symbols_window = None
+        global _imported_data_symbols_window
+        _imported_data_symbols_window = None
         event.accept()
 
-def show_data_symbols(bv):
-    global _data_symbols_window
+def show_imported_data_symbols(bv):
+    global _imported_data_symbols_window
     
-    if _data_symbols_window is not None:
-        _data_symbols_window.raise_()
-        _data_symbols_window.activateWindow()
+    if _imported_data_symbols_window is not None:
+        _imported_data_symbols_window.raise_()
+        _imported_data_symbols_window.activateWindow()
         return
     
-    _data_symbols_window = DataSymbolsWindow(bv)
-    _data_symbols_window.show()
-    _data_symbols_window.raise_()
-    _data_symbols_window.activateWindow()
+    _imported_data_symbols_window = ImportedDataSymbolsWindow(bv)
+    _imported_data_symbols_window.show()
+    _imported_data_symbols_window.raise_()
+    _imported_data_symbols_window.activateWindow()
 
 PluginCommand.register(
-    "nyxFault-Binja\\Show Data Symbols",
-    "Display all DataSymbols in a searchable table",
-    show_data_symbols
+    "nyxFault-Binja\\Show Imported Data Symbols",
+    "Display all ImportedDataSymbols in a searchable table",
+    show_imported_data_symbols
 )

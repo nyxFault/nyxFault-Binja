@@ -60,10 +60,6 @@ class FunctionSymbolsWindow(QWidget):
         self.table.setSortingEnabled(True)
         self.table.doubleClicked.connect(self.on_double_click)
         
-        # Set monospace font for address column
-        monospace_font = QFont("Courier New")
-        self.table.setFont(monospace_font)
-        
         layout.addWidget(self.table)
         self.setLayout(layout)
 

@@ -11,9 +11,9 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont
 
 # Global reference to keep the window alive
-_import_address_symbols_window = None
+_local_label_symbols_window = None
 
-class ImportAddressSymbolsWindow(QWidget):
+class LocalLabelSymbolsWindow(QWidget):
     def __init__(self, bv, parent=None):
         super().__init__(parent)
         self.bv = bv
@@ -22,7 +22,7 @@ class ImportAddressSymbolsWindow(QWidget):
         self.load_symbols()
         
     def init_ui(self):
-        self.setWindowTitle("Import Address Symbols")
+        self.setWindowTitle("Local Label Symbols")
         self.setFixedSize(800, 600)
         
         layout = QVBoxLayout()
@@ -32,7 +32,7 @@ class ImportAddressSymbolsWindow(QWidget):
         search_layout.addWidget(QLabel("Search:"))
         
         self.search_input = QLineEdit()
-        self.search_input.setPlaceholderText("Search import address symbols...")
+        self.search_input.setPlaceholderText("Search local labels...")
         self.search_input.textChanged.connect(self.filter_symbols)
         search_layout.addWidget(self.search_input)
         
@@ -49,17 +49,13 @@ class ImportAddressSymbolsWindow(QWidget):
         # Table
         self.table = QTableWidget()
         self.table.setColumnCount(2)
-        self.table.setHorizontalHeaderLabels(["Symbol Name", "Address"])
+        self.table.setHorizontalHeaderLabels(["Label Name", "Address"])
         
         # Set table properties
         self.table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
         self.table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
         self.table.setSortingEnabled(True)
         self.table.doubleClicked.connect(self.on_double_click)
-        
-        # Set monospace font for address column
-        monospace_font = QFont("Courier New")
-        self.table.setFont(monospace_font)
         
         layout.addWidget(self.table)
         self.setLayout(layout)
@@ -73,13 +69,13 @@ class ImportAddressSymbolsWindow(QWidget):
         self.move(x, y)
         
     def load_symbols(self):
-        """Load all ImportAddressSymbols from the binary"""
+        """Load all LocalLabelSymbols from the binary"""
         self.all_symbols = []
         
-        # Get all ImportAddressSymbols
-        import_address_symbols = self.bv.get_symbols_of_type(SymbolType.ImportAddressSymbol)
+        # Get all LocalLabelSymbols
+        local_label_symbols = self.bv.get_symbols_of_type(SymbolType.LocalLabelSymbol)
         
-        for sym in import_address_symbols:
+        for sym in local_label_symbols:
             self.all_symbols.append({
                 'name': sym.full_name or "Unknown",
                 'address': sym.address,
@@ -108,7 +104,7 @@ class ImportAddressSymbolsWindow(QWidget):
         self.table.setRowCount(len(symbols))
         
         for row, symbol in enumerate(symbols):
-            # Symbol Name
+            # Label Name
             name_item = QTableWidgetItem(symbol['name'])
             name_item.setData(Qt.UserRole, symbol['symbol'])
             self.table.setItem(row, 0, name_item)
@@ -121,7 +117,7 @@ class ImportAddressSymbolsWindow(QWidget):
         self.count_label.setText(f"Total: {len(symbols)}")
         
     def on_double_click(self, index):
-        """Handle double-click to navigate to address"""
+        """Handle double-click to navigate to label"""
         row = index.row()
         symbol_item = self.table.item(row, 0)
         
@@ -133,25 +129,25 @@ class ImportAddressSymbolsWindow(QWidget):
     
     def closeEvent(self, event):
         """Handle window close - clear global reference"""
-        global _import_address_symbols_window
-        _import_address_symbols_window = None
+        global _local_label_symbols_window
+        _local_label_symbols_window = None
         event.accept()
 
-def show_import_address_symbols(bv):
-    global _import_address_symbols_window
+def show_local_label_symbols(bv):
+    global _local_label_symbols_window
     
-    if _import_address_symbols_window is not None:
-        _import_address_symbols_window.raise_()
-        _import_address_symbols_window.activateWindow()
+    if _local_label_symbols_window is not None:
+        _local_label_symbols_window.raise_()
+        _local_label_symbols_window.activateWindow()
         return
     
-    _import_address_symbols_window = ImportAddressSymbolsWindow(bv)
-    _import_address_symbols_window.show()
-    _import_address_symbols_window.raise_()
-    _import_address_symbols_window.activateWindow()
+    _local_label_symbols_window = LocalLabelSymbolsWindow(bv)
+    _local_label_symbols_window.show()
+    _local_label_symbols_window.raise_()
+    _local_label_symbols_window.activateWindow()
 
 PluginCommand.register(
-    "nyxFault-Binja\\Show Import Address Symbols",
-    "Display all ImportAddressSymbols in a searchable table",
-    show_import_address_symbols
+    "nyxFault-Binja\\Show Local Label Symbols",
+    "Display all LocalLabelSymbols in a searchable table",
+    show_local_label_symbols
 )

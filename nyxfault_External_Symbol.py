@@ -11,9 +11,9 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont
 
 # Global reference to keep the window alive
-_imported_function_symbols_window = None
+_external_symbols_window = None
 
-class ImportedFunctionSymbolsWindow(QWidget):
+class ExternalSymbolsWindow(QWidget):
     def __init__(self, bv, parent=None):
         super().__init__(parent)
         self.bv = bv
@@ -22,7 +22,7 @@ class ImportedFunctionSymbolsWindow(QWidget):
         self.load_symbols()
         
     def init_ui(self):
-        self.setWindowTitle("Imported Function Symbols")
+        self.setWindowTitle("External Symbols")
         self.setFixedSize(800, 600)
         
         layout = QVBoxLayout()
@@ -32,7 +32,7 @@ class ImportedFunctionSymbolsWindow(QWidget):
         search_layout.addWidget(QLabel("Search:"))
         
         self.search_input = QLineEdit()
-        self.search_input.setPlaceholderText("Search imported functions...")
+        self.search_input.setPlaceholderText("Search external symbols...")
         self.search_input.textChanged.connect(self.filter_symbols)
         search_layout.addWidget(self.search_input)
         
@@ -49,17 +49,13 @@ class ImportedFunctionSymbolsWindow(QWidget):
         # Table
         self.table = QTableWidget()
         self.table.setColumnCount(2)
-        self.table.setHorizontalHeaderLabels(["Function Name", "Address"])
+        self.table.setHorizontalHeaderLabels(["Symbol Name", "Address"])
         
         # Set table properties
         self.table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
         self.table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
         self.table.setSortingEnabled(True)
         self.table.doubleClicked.connect(self.on_double_click)
-        
-        # Set monospace font for address column
-        monospace_font = QFont("Courier New")
-        self.table.setFont(monospace_font)
         
         layout.addWidget(self.table)
         self.setLayout(layout)
@@ -73,13 +69,13 @@ class ImportedFunctionSymbolsWindow(QWidget):
         self.move(x, y)
         
     def load_symbols(self):
-        """Load all ImportedFunctionSymbols from the binary"""
+        """Load all ExternalSymbols from the binary"""
         self.all_symbols = []
         
-        # Get all ImportedFunctionSymbols
-        imported_function_symbols = self.bv.get_symbols_of_type(SymbolType.ImportedFunctionSymbol)
+        # Get all ExternalSymbols
+        external_symbols = self.bv.get_symbols_of_type(SymbolType.ExternalSymbol)
         
-        for sym in imported_function_symbols:
+        for sym in external_symbols:
             self.all_symbols.append({
                 'name': sym.full_name or "Unknown",
                 'address': sym.address,
@@ -108,7 +104,7 @@ class ImportedFunctionSymbolsWindow(QWidget):
         self.table.setRowCount(len(symbols))
         
         for row, symbol in enumerate(symbols):
-            # Function Name
+            # Symbol Name
             name_item = QTableWidgetItem(symbol['name'])
             name_item.setData(Qt.UserRole, symbol['symbol'])
             self.table.setItem(row, 0, name_item)
@@ -133,25 +129,25 @@ class ImportedFunctionSymbolsWindow(QWidget):
     
     def closeEvent(self, event):
         """Handle window close - clear global reference"""
-        global _imported_function_symbols_window
-        _imported_function_symbols_window = None
+        global _external_symbols_window
+        _external_symbols_window = None
         event.accept()
 
-def show_imported_function_symbols(bv):
-    global _imported_function_symbols_window
+def show_external_symbols(bv):
+    global _external_symbols_window
     
-    if _imported_function_symbols_window is not None:
-        _imported_function_symbols_window.raise_()
-        _imported_function_symbols_window.activateWindow()
+    if _external_symbols_window is not None:
+        _external_symbols_window.raise_()
+        _external_symbols_window.activateWindow()
         return
     
-    _imported_function_symbols_window = ImportedFunctionSymbolsWindow(bv)
-    _imported_function_symbols_window.show()
-    _imported_function_symbols_window.raise_()
-    _imported_function_symbols_window.activateWindow()
+    _external_symbols_window = ExternalSymbolsWindow(bv)
+    _external_symbols_window.show()
+    _external_symbols_window.raise_()
+    _external_symbols_window.activateWindow()
 
 PluginCommand.register(
-    "nyxFault-Binja\\Show Imported Function Symbols",
-    "Display all ImportedFunctionSymbols in a searchable table",
-    show_imported_function_symbols
+    "nyxFault-Binja\\Show External Symbols",
+    "Display all ExternalSymbols in a searchable table",
+    show_external_symbols
 )

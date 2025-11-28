@@ -11,9 +11,9 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont
 
 # Global reference to keep the window alive
-_symbolic_function_symbols_window = None
+_library_function_symbols_window = None
 
-class SymbolicFunctionSymbolsWindow(QWidget):
+class LibraryFunctionSymbolsWindow(QWidget):
     def __init__(self, bv, parent=None):
         super().__init__(parent)
         self.bv = bv
@@ -22,7 +22,7 @@ class SymbolicFunctionSymbolsWindow(QWidget):
         self.load_symbols()
         
     def init_ui(self):
-        self.setWindowTitle("Symbolic Function Symbols")
+        self.setWindowTitle("Library Function Symbols")
         self.setFixedSize(800, 600)
         
         layout = QVBoxLayout()
@@ -32,7 +32,7 @@ class SymbolicFunctionSymbolsWindow(QWidget):
         search_layout.addWidget(QLabel("Search:"))
         
         self.search_input = QLineEdit()
-        self.search_input.setPlaceholderText("Search symbolic functions...")
+        self.search_input.setPlaceholderText("Search library functions...")
         self.search_input.textChanged.connect(self.filter_symbols)
         search_layout.addWidget(self.search_input)
         
@@ -57,10 +57,6 @@ class SymbolicFunctionSymbolsWindow(QWidget):
         self.table.setSortingEnabled(True)
         self.table.doubleClicked.connect(self.on_double_click)
         
-        # Set monospace font for address column
-        monospace_font = QFont("Courier New")
-        self.table.setFont(monospace_font)
-        
         layout.addWidget(self.table)
         self.setLayout(layout)
         self.center_window()
@@ -73,13 +69,13 @@ class SymbolicFunctionSymbolsWindow(QWidget):
         self.move(x, y)
         
     def load_symbols(self):
-        """Load all SymbolicFunctionSymbols from the binary"""
+        """Load all LibraryFunctionSymbols from the binary"""
         self.all_symbols = []
         
-        # Get all SymbolicFunctionSymbols
-        symbolic_function_symbols = self.bv.get_symbols_of_type(SymbolType.SymbolicFunctionSymbol)
+        # Get all LibraryFunctionSymbols
+        library_function_symbols = self.bv.get_symbols_of_type(SymbolType.LibraryFunctionSymbol)
         
-        for sym in symbolic_function_symbols:
+        for sym in library_function_symbols:
             self.all_symbols.append({
                 'name': sym.full_name or "Unknown",
                 'address': sym.address,
@@ -133,25 +129,25 @@ class SymbolicFunctionSymbolsWindow(QWidget):
     
     def closeEvent(self, event):
         """Handle window close - clear global reference"""
-        global _symbolic_function_symbols_window
-        _symbolic_function_symbols_window = None
+        global _library_function_symbols_window
+        _library_function_symbols_window = None
         event.accept()
 
-def show_symbolic_function_symbols(bv):
-    global _symbolic_function_symbols_window
+def show_library_function_symbols(bv):
+    global _library_function_symbols_window
     
-    if _symbolic_function_symbols_window is not None:
-        _symbolic_function_symbols_window.raise_()
-        _symbolic_function_symbols_window.activateWindow()
+    if _library_function_symbols_window is not None:
+        _library_function_symbols_window.raise_()
+        _library_function_symbols_window.activateWindow()
         return
     
-    _symbolic_function_symbols_window = SymbolicFunctionSymbolsWindow(bv)
-    _symbolic_function_symbols_window.show()
-    _symbolic_function_symbols_window.raise_()
-    _symbolic_function_symbols_window.activateWindow()
+    _library_function_symbols_window = LibraryFunctionSymbolsWindow(bv)
+    _library_function_symbols_window.show()
+    _library_function_symbols_window.raise_()
+    _library_function_symbols_window.activateWindow()
 
 PluginCommand.register(
-    "nyxFault-Binja\\Show Symbolic Function Symbols",
-    "Display all SymbolicFunctionSymbols in a searchable table",
-    show_symbolic_function_symbols
+    "nyxFault-Binja\\Show Library Function Symbols",
+    "Display all LibraryFunctionSymbols in a searchable table",
+    show_library_function_symbols
 )
