@@ -53,7 +53,7 @@ Navigate to:
 
 It should look like this:
 
-![Plugin](https://github.com/nyxFault/nyxFault-Binja/blob/main/image.png?raw=true)
+![Plugin](https://github.com/nyxFault/Images/blob/main/image.png?raw=true)
 
 #### 2. Through the Command Palette
 
@@ -109,3 +109,6 @@ A Windows Device I/O Control (IOCTL) code decoder plugin for Binary Ninja. This 
 
 - Based on work by Satoshi Tanda [WinIoCtlDecoder](https://github.com/tandasat/WinIoCtlDecoder)
 - Device type mapping from [OSR Online](https://www.osronline.com/article.cfm^article=229.htm)
+
+
+
